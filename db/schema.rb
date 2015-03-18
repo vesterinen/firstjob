@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20150310214308) do
     t.string   "location"
     t.string   "employment_status"
     t.string   "industry"
-    t.integer  "student_id"
     t.text     "bio"
     t.binary   "picture"
     t.datetime "created_at",        null: false

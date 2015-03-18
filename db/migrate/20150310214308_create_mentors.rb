@@ -8,7 +8,6 @@ class CreateMentors < ActiveRecord::Migration
       t.string :location
       t.string :employment_status
       t.string :industry
-      t.integer :student_id
       t.text :bio
       t.binary :picture
 
