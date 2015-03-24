@@ -11,11 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310214308) do
+ActiveRecord::Schema.define(version: 20150324211659) do
 
-  create_table "mentors", force: :cascade do |t|
+  create_table "matches", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "mentor_id"
+    t.string   "status",     default: "pending"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "email"
     t.string   "gender"
     t.date     "birthday"
     t.string   "location"
@@ -23,22 +32,11 @@ ActiveRecord::Schema.define(version: 20150310214308) do
     t.string   "industry"
     t.text     "bio"
     t.binary   "picture"
+    t.string   "linkedin_url"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "gender"
-    t.date     "birthday"
-    t.string   "location"
+    t.string   "role"
     t.string   "education_level"
-    t.integer  "mentor_id"
-    t.text     "bio"
-    t.binary   "picture"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
   end
 
 end

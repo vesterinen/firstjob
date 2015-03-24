@@ -1,7 +1,0 @@
-<ol>
-<% @mentors.each do |mentor|%>
- <li> <%= link_to "#{mentor.first_name} #{mentor.last_name}", mentor_path(mentor) %></li>
-<% end %>
-</ol>
-
-<%= link_to 'Back', root_path %>

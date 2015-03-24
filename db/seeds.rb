@@ -7,51 +7,51 @@ def randomize(array)
 end
 
 def users
-   random_birthdate = Date.new(rand(1950..1996), rand(1..12), rand(1..28))
+  random_birthdate = Date.new(rand(1950..1996), rand(1..12), rand(1..28))
 
-   first_names = ["Alexis", "Alex", "Glenn", "Simone", "Theo", "Max", "Mel", "Nat", "Nicki", "Robin", "Sam", "Vic", "Chris", "Bobbie", "Remi"]
+  first_names = ["Alexis", "Alex", "Glenn", "Simone", "Theo", "Max", "Mel", "Nat", "Nicki", "Robin", "Sam", "Vic", "Chris", "Bobbie", "Remi"]
 
-   last_names = ["Steinberg", "Flombaum", "Sardina", "Taveras", "Ramirez", "Ain", "Johnson", "Jordan", "Stevenson", "Smith"]
+  last_names = ["Steinberg", "Flombaum", "Sardina", "Taveras", "Ramirez", "Ain", "Johnson", "Jordan", "Stevenson", "Smith"]
 
-   genders = ["male", "female"]
+  genders = ["male", "female"]
 
-   locations = ["New York City", "Boston", "San Francisco", "Florida", "Philadelphia"]
+  locations = ["New York City", "Boston", "San Francisco", "Florida", "Philadelphia"]
 
-   education_levels = ["High School Diploma", "Trade School or Technical Program", "BA/BS", "MA/MS", "PhD"]
+  education_levels = ["High School Diploma", "Trade School or Technical Program", "BA/BS", "MA/MS", "PhD"]
 
-   employment_status = ["Unemployed","Self-Employed","Looking","Retired"]
+  employment_status = ["Unemployed","Self-Employed","Looking","Retired"]
 
-   industries = ["Health Sciences", "Education", "Politics", "Public Health", "Finances", "Law"]
+  industries = ["Health Sciences", "Education", "Politics", "Public Health", "Finances", "Law"]
 
-   mentor_ids = (1..10).to_a
+  roles = ["student", "mentor"]
 
-   10.times do
-     Mentor.create(
-     {
-       first_name: randomize(first_names),
-       last_name: randomize(last_names),
-       gender: randomize(genders),
-       birthday: random_birthdate,
-       location: randomize(locations),
-       industry: randomize(industries),
-       employment_status: randomize(employment_status)
-     })
- end
+  emails_array = emails
 
- 20.times do
-   Student.create(
-           {
-           first_name: randomize(first_names),
-           last_name: randomize(last_names),
-           gender: randomize(genders),
-           birthday: random_birthdate,
-           location: randomize(locations),
-           education_level: randomize(education_levels),
-           mentor_id: randomize(mentor_ids)
-           }
-         )
-   end
+  20.times do |time|
+    User.create(
+    {
+    first_name: randomize(first_names),
+    last_name: randomize(last_names),
+    role: randomize(roles),
+    email: emails_array[time],
+    gender: randomize(genders),
+    birthday: random_birthdate,
+    location: randomize(locations),
+    industry: randomize(industries),
+    education_level: randomize(education_levels),
+    employment_status: randomize(employment_status)
+    })
   end
+end
+
+def emails
+  emails = []
+  base_string = "person_0@example.com"
+  (1..20).each do |number|
+    emails << base_string.gsub("0", number.to_s)
+  end
+  emails
+end
 
 users
 
