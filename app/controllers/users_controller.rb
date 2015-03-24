@@ -26,7 +26,15 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    redirect_to users_path
+    # respond_to do |format|
+      # if @user.save
+      #   format.hmtl{redirect_to @user, notice: "user successfully created"}
+      #   format.json{render action: "show", status: :created, location: @user}
+      # else
+      #   format.hmtl{render action: "new"}
+      #   format.json{render json: @user.errors, status: :unprocessable_entity}
+      # end
+    # end
   end
 
 
