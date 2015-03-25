@@ -1,0 +1,10 @@
+<h1><%="#{@user.first_name} #{@user.last_name}"%></h1>
+
+<%= @user.picture %></br>
+<%= @user.gender %></br>
+<%= @user.birthday %></br>
+<%= @user.location %></br>
+<%= @user.employment_status %></br>
+<%= @user.bio %></br>
+
+<%= link_to 'Edit', "#{@user.id}/edit" %> |
