@@ -32,7 +32,7 @@ def users
     {
     first_name: randomize(first_names),
     last_name: randomize(last_names),
-    role: "mentor",
+    role: "student",
     email: emails_array[time],
     gender: randomize(genders),
     birthday: random_birthdate,
