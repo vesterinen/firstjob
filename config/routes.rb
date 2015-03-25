@@ -1,8 +1,28 @@
 Rails.application.routes.draw do
 
-  resources :users
+  resources :users, path: "mentors", except: :index
+  resources :users, path: "students", except: :index
 
-  root "welcome#index"
+  # resources :users, path: "students"|| "mentors", except: :index
+  
+  get '/mentors' => 'users#mentors_index'
+  get '/students' => 'users#students_index'
+
+  # resources :users do
+  #   :mentors
+  # end
+  # resources :users, as: 'mentors'
+
+
+
+  # get '/users' => 'users#show'
+  # get '/students/:id' => 'users#show' 
+
+
+  # get '/mentors/:id' => 'users#show', as: "mentor"
+  # get '/students/:id' => 'users#show', as: "student" 
+
+  root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
