@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324211659) do
+ActiveRecord::Schema.define(version: 20150325163150) do
 
   create_table "matches", force: :cascade do |t|
     t.integer  "student_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150324211659) do
     t.datetime "updated_at",        null: false
     t.string   "role"
     t.string   "education_level"
+    t.boolean  "active?"
   end
 
 end
