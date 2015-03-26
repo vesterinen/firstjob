@@ -2,5 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+
+<% if @user.role == "mentor" %>
+  <%= link_to 'Back', mentors_path %>
+<% else %>
+  <%= link_to "Back", students_path %>
+<% end %>

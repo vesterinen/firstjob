@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  # has_secure_password
+
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -12,4 +14,25 @@ class User < ActiveRecord::Base
   #as student
   has_one :mentor_match,  class_name: "Match", foreign_key: :student_id
   delegate :mentor, to: :mentor_match
+
+  def self.login(email)
+    (user = User.find_by(:email => email)) #&& user.authenticate(password)
+  end
+
+  def generate_match
+    if self.role == "student"
+      # mentors = User.where(role: "mentor") #create large pool of candidates
+      mentor = User.find_by(role: "mentor", location: self.location)
+      if mentor
+        Match.create(student_id: self.id, mentor_id: mentor.id)
+      else
+        return "No matches found."
+      end
+    # else
+    #   students = User.where(role: "student")
+    #   self.studentsstudents.find_by(location: self.location)
+    end
+    # 1. Create pool of candidates
+        # a. if the user is a 
+  end
 end
