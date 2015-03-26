@@ -19,4 +19,20 @@ class User < ActiveRecord::Base
     (user = User.find_by(:email => email)) #&& user.authenticate(password)
   end
 
+  def generate_match
+    if self.role == "student"
+      # mentors = User.where(role: "mentor") #create large pool of candidates
+      mentor = User.find_by(role: "mentor", location: self.location)
+      if mentor
+        Match.create(student_id: self.id, mentor_id: mentor.id)
+      else
+        return "No matches found."
+      end
+    # else
+    #   students = User.where(role: "student")
+    #   self.studentsstudents.find_by(location: self.location)
+    end
+    # 1. Create pool of candidates
+        # a. if the user is a 
+  end
 end

@@ -48,6 +48,10 @@
   <%= f.label :linkedin_url %>
   <%= f.text_field :linkedin_url %><br><br>
  </div>
-  <%= f.submit "Save Changes" %>
+  <% if @user.id %>
+    <%= f.submit "Save Changes" %>
+  <% else %>
+    <%= f.submit "Give me my match!" %>
+  <% end %>
 <% end %>
 
