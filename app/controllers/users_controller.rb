@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
+  before_action :login_required, :only => [:show, :edit]
 
-  # def index
-  #   # @mentors = User.where(role: "mentor") #change to arel
-  #   # @students = User.where(role: "student")
-  #   @users = User.where(role: "mentor")
-  #   @users = User.where(role: "student")
-  # end
+  def new
+    @user = User.new
+  end
 
   def students_index
     @users = User.where(role: "student")
@@ -19,8 +17,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # @mentors = User.find_by(role: "mentor")
-    # @students = User.find_by(role: "student")
   end
 
   def edit
@@ -33,22 +29,13 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
-  def new
-    @user = User.new
-  end
-
   def create
     @user = User.new(user_params)
-    @user.save
-    # respond_to do |format|
-      # if @user.save
-      #   format.hmtl{redirect_to @user, notice: "user successfully created"}
-      #   format.json{render action: "show", status: :created, location: @user}
-      # else
-      #   format.hmtl{render action: "new"}
-      #   format.json{render json: @user.errors, status: :unprocessable_entity}
-      # end
-    # end
+    if @user.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
 private

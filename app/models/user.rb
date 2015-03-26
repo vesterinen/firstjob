@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  # has_secure_password
+
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -12,4 +14,9 @@ class User < ActiveRecord::Base
   #as student
   has_one :mentor_match,  class_name: "Match", foreign_key: :student_id
   delegate :mentor, to: :mentor_match
+
+  def self.login(email)
+    (user = User.find_by(:email => email)) #&& user.authenticate(password)
+  end
+
 end
