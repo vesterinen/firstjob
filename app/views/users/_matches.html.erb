@@ -1,0 +1,23 @@
+<% if @user.role == "Mentor" %>
+  <h3 class="my-matches">My Students</h3>
+<% else %>
+  <h3>My Mentor</h3>
+<% end %>
+
+<ol>
+  <% if @user.role == "Mentor" %>
+    <% if !@user.students.empty? %>
+      <% @user.students.each do |student|%>
+        <li class="link-to-match"><%= link_to "#{student.first_name} #{student.last_name}", student_path(student) %></li>
+      <% end %>
+    <% else %>
+      You currently have no students.
+    <% end %>
+  <% else %>
+    <% if @user.mentor_match %>
+      <li class="link-to-match"><%= link_to @user.mentor.first_name, mentor_path(@user.mentor) %></li>
+    <% else %>
+      You currently do not have an assigned mentor.
+    <% end %>
+  <% end %>
+</ol>
