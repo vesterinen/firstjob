@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
   # has_secure_password
 
-  validates :role, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-  validates :location, presence: true
+  # validates :role, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
+  # validates :email, presence: true, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  # validates :location, presence: true
 
   #as a mentor
   has_many :student_matches, class_name: "Match", foreign_key: :mentor_id
@@ -20,21 +20,22 @@ class User < ActiveRecord::Base
   end
 
   def generate_match
-    if self.role == "student"
-      #ville's version
-      # mentors = User.where(role: "mentor") #create large pool of candidates
-      candidates = User.where(role: "mentor", location: self.location)
-      mentor = candidates.find { |candidate|  candidate.students.length < 2 }
-      if mentor
+    if self.role == "Student"
+      candidates = User.where(role: "Mentor", location: self.location)
+      if candidates.count > 0
+        mentor = candidates.sample
+         #mentor = candidates.find { |candidate|  candidate.students.length < 2 }
+         #if mentor
         Match.create(student_id: self.id, mentor_id: mentor.id)
       else
         return "No matches found."
       end
-    # else
-    #   students = User.where(role: "student")
-    #   self.studentsstudents.find_by(location: self.location)
+    else
+      candidates = User.where(role: "Student", location: self.location)
+      if candidates.count > 0
+        student = candidates.sample
+        self.students << student
+      end
     end
-    # 1. Create pool of candidates
-        # a. if the user is a
   end
 end

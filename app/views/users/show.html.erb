@@ -1,11 +1,21 @@
-<h1><%="#{@user.first_name} #{@user.last_name}"%></h1>
+<h1 class="user-name"><%="#{@user.first_name} #{@user.last_name}"%></h1>
 
-<%= @user.picture %></br>
-<%= @user.gender %></br>
-<%= @user.birthday %></br>
-<%= @user.location %></br>
-<%= @user.employment_status %></br>
-<%= @user.bio %></br>
-<%= @user.role %><br>
+<p class="user-attribute"><%= @user.picture %></p>
+<p class="user-attribute"><%= @user.gender %></p>
+<p class="user-attribute"><%= @user.birthday %></p>
+<p class="user-attribute"><%= @user.location %></p>
+<p class="user-attribute"><%= @user.employment_status %></p>
+<p class="user-attribute"><%= @user.bio %></p>
+<p class="user-attribute"><%= @user.role %></p>
+<p class="user-attribute"><%= @user.education_level %></p>
+<p class="user-attribute"><%= @user.industry %></p>
+<p class="user-attribute"><%= @user.linkedin_url %></p>
+
+<%= render 'matches' %>
 
 <%= link_to 'Edit', "#{@user.id}/edit" %> |
+<% if @user.role == "Mentor" %>
+  <%= link_to "Back", mentors_path %>
+<% else %>
+  <%= link_to "Back", students_path %>
+<% end %>

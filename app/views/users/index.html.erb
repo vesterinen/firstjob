@@ -1,6 +1,14 @@
+<% if @users.first %>
+  <% if @users.first.role == "Student" %>
+    <h2>Our Students</h2>
+  <% else %>
+    <h2>Our Mentors</h2>
+   <% end %>
+<% end %>
+
 <ol>
 <% @users.each do |user|%>
-  <% if user.role == "mentor" %>
+  <% if user.role == "Mentor" %>
     <li> <%= link_to "#{user.first_name} #{user.last_name}", mentor_path(user) %></li>
   <% else %>
     <li> <%= link_to "#{user.first_name} #{user.last_name}", student_path(user) %></li>

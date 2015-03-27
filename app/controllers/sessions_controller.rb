@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
       end
     else
       flash.now[:notice] = "Ooops! Looks like you have not registered yet."
+
       render :new
     end
   end

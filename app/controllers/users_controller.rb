@@ -6,12 +6,12 @@ class UsersController < ApplicationController
   end
 
   def students_index
-    @users = User.where(role: "student")
+    @users = User.where(role: "Student")
     render :index
   end
 
   def mentors_index
-    @users = User.where(role: "mentor")
+    @users = User.where(role: "Mentor")
     render :index
   end
 
