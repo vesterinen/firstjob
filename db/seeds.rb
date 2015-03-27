@@ -23,7 +23,7 @@ def users
 
   industries = ["Health Sciences", "Education", "Politics", "Public Health", "Finances", "Law"]
 
-  roles = ["student", "mentor"]
+  roles = ["Student", "Mentor"]
 
   emails_array = emails
 
@@ -32,7 +32,7 @@ def users
     {
     first_name: randomize(first_names),
     last_name: randomize(last_names),
-    role: "mentor",
+    role: roles.sample,
     email: emails_array[time],
     gender: randomize(genders),
     birthday: random_birthdate,

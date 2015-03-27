@@ -20,17 +20,17 @@ class User < ActiveRecord::Base
   end
 
   def generate_match
-    if self.role == "student"
-      # mentors = User.where(role: "mentor") #create large pool of candidates
-      mentor = User.find_by(role: "mentor", location: self.location)
+    if self.role == "Student"
+      mentors = User.where(role: "Mentor") #create large pool of candidates
+      mentor = User.find_by(role: "Mentor", location: self.location)
       if mentor
         Match.create(student_id: self.id, mentor_id: mentor.id)
       else
         return "No matches found."
       end
     # else
-    #   students = User.where(role: "student")
-    #   self.studentsstudents.find_by(location: self.location)
+    #   students = User.where(role: "Student")
+    #   self.students << User.where(location: self.location).limit(3)
     end
     # 1. Create pool of candidates
         # a. if the user is a 
