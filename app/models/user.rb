@@ -21,8 +21,10 @@ class User < ActiveRecord::Base
 
   def generate_match
     if self.role == "student"
+      #ville's version
       # mentors = User.where(role: "mentor") #create large pool of candidates
-      mentor = User.find_by(role: "mentor", location: self.location)
+      candidates = User.where(role: "mentor", location: self.location)
+      mentor = candidates.find { |candidate|  candidate.students.length < 2 }
       if mentor
         Match.create(student_id: self.id, mentor_id: mentor.id)
       else
@@ -33,6 +35,6 @@ class User < ActiveRecord::Base
     #   self.studentsstudents.find_by(location: self.location)
     end
     # 1. Create pool of candidates
-        # a. if the user is a 
+        # a. if the user is a
   end
 end
