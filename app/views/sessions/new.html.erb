@@ -1,0 +1,14 @@
+<!-- <h1>Login</h1> -->
+
+<% if flash[:notice] %>
+<h2><%= flash[:notice] %></h2>
+<% end %>
+
+<%= form_tag(sessions_path) do %>
+  
+  <p>
+    Email: <%= text_field_tag :email %>
+  </p>
+
+  <%= submit_tag "Sign In"%>
+<% end %>

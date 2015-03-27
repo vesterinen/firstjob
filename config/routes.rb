@@ -1,28 +1,31 @@
 Rails.application.routes.draw do
-
   # resources :users, path: "mentors", except: :index
   # resources :users, path: "students", except: :index
 
-  # resources :users, path: "students"|| "mentors", except: :index
+  get '/users/new' => 'users#new'
+  post '/' => 'users#create'
   
   get '/mentors' => 'users#mentors_index'
   post '/mentors' => 'users#create'
-  get '/mentors/new' => 'users#new'
+  # get '/mentors/new' => 'users#new'
   get '/mentors/:id/edit' => 'users#edit'
   patch '/mentors/:id' => 'users#update'
   put '/mentors/:id' => 'users#update'
   get '/mentors/:id' => 'users#show', as: :mentor
 
+  root 'welcome#index'
 
   get '/students' => 'users#students_index'
   post '/students' => 'users#create'
-  get '/students/new' => 'users#new'
+  # get '/students/new' => 'users#new'
   get '/students/:id/edit' => 'users#edit'
   patch '/students/:id' => 'users#update'
   put '/students/:id' => 'users#update'
   get '/students/:id' => 'users#show', as: :student
 
-
+  get '/login' => 'sessions#new'
+  post '/sessions' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
   # resources :users do
   #   :mentors
   # end
@@ -37,7 +40,6 @@ Rails.application.routes.draw do
   # get '/mentors/:id' => 'users#show', as: "mentor"
   # get '/students/:id' => 'users#show', as: "student" 
 
-  root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
