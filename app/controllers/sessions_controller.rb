@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+
   def new
   end
 
@@ -13,7 +14,8 @@ class SessionsController < ApplicationController
         redirect_to root_path
       end
     else
-      flash.now[:notice] = "Can't log you in."
+      flash.now[:notice] = "Ooops! Looks like you have not registered yet."
+
       render :new
     end
   end
