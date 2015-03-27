@@ -1,3 +1,7 @@
+<% if flash[:notice] %>
+ <div class="notice"><%= flash[:notice] %> </div>
+<% end %>
+
 <h1 class="user-name"><%="#{@user.first_name} #{@user.last_name}"%></h1>
 
 <p class="user-attribute"><%= @user.picture %></p>

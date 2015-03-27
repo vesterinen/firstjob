@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :login_required, :only => [:show, :edit]
+#  before_action :login_required, :only => [:show, :edit]
 
   def new
     @user = User.new
@@ -33,7 +33,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_match
-      redirect_to root_path
+      if @user.role == "Student"
+        flash[:notice] = "Here's your match. Feel free to contact anytime."
+        redirect_to mentor_path(@user.mentor)
+     else
+       redirect_to student_path(@user)
+      end
     else
       render :new
     end
@@ -43,6 +48,10 @@ private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :role, :picture, :gender, :location, :bio, :email, :birthday, :education_level, :linkedin_url, :employment_status, :industry)
   end
+
+  def flash_message
+  end
+
 
 end
 
