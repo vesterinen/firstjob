@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   # validates :email, presence: true, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   # validates :location, presence: true
 
+  has_many :user_industries
+  has_many :industries, through: :user_industries
+
   #as a mentor
   has_many :student_matches, class_name: "Match", foreign_key: :mentor_id
   has_many :students, through: :student_matches

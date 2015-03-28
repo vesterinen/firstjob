@@ -12,14 +12,7 @@
 <p class="user-attribute"><%= @user.bio %></p>
 <p class="user-attribute"><%= @user.role %></p>
 <p class="user-attribute"><%= @user.education_level %></p>
-<p class="user-attribute"><%= @user.industry %></p>
 <p class="user-attribute"><%= @user.linkedin_url %></p>
 
 <%= render 'matches' %>
 
-<%= link_to 'Edit', "#{@user.id}/edit" %> |
-<% if @user.role == "Mentor" %>
-  <%= link_to "Back", mentors_path %>
-<% else %>
-  <%= link_to "Back", students_path %>
-<% end %>
