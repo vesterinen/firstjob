@@ -13,7 +13,12 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav navbar-right">
-      <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to 'Home', root_path %></li>
+        <li><% if !logged_in? %></li>
+          <li><%= link_to "Sign Up", users_new_path %></li>
+          <% else %>
+         <li><%= link_to "#{current_user.first_name}", student_path(current_user) %></li>
+      <li><% end %></li>
       <li><%= link_to 'Mentors', mentors_path %></li>
       <li><%= link_to 'Students', students_path %></li>
        <li class="dropdown">
@@ -22,14 +27,11 @@
             <li><a href="#">Contact</a></li>
             <li><a href="#">Mentor Resources</a></li>
             <li><a href="#">Student Resources</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
           </ul>
         </li>
-      <li><%= login_or_logout %></li>
       <li><% if !logged_in? %></li>
-       <li><%= link_to "Sign Up", users_new_path %></li>
-        <li><% end %></li>
+          <li><%= link_to "Sign Up", users_new_path %></li>
+      <li><% end %></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
