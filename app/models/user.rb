@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_one :mentor_match,  class_name: "Match", foreign_key: :student_id
   delegate :mentor, to: :mentor_match
 
+  accepts_nested_attributes_for :industries
+
   def self.login(email)
     (user = User.find_by(:email => email)) #&& user.authenticate(password)
   end

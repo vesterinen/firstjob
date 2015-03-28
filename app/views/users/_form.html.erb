@@ -1,4 +1,14 @@
-x§<%= form_for(@user, url: root_path) do |f| %>
+<% if @user.id %>
+  <% if @user.role == "Student" %>
+    <% path = student_path(@user) %>
+  <% else %>
+    <% path = mentor_path(@user) %>
+  <% end %>
+<% else %>
+  <% path = root_path %>
+<% end %>
+
+<%= form_for(@user, url: path) do |f| %>
  <% if @user.errors.any? %>
    <div id="error_explanation">
      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -29,6 +39,11 @@ x§<%= form_for(@user, url: root_path) do |f| %>
 
   <%= f.label :location %>
   <%= f.text_field :location %><br><br>
+
+  <div class="field">
+    <%= f.label :industry %><br>
+    <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
+  </div>
 
   <%= f.label :birthday %>
   <%= f.text_field :birthday %><br><br>

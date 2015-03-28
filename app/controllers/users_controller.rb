@@ -26,7 +26,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
-    redirect_to user_path(@user)
+    #redirect_to user_path(@user)
+    if @user.role == "Mentor"
+        redirect_to mentor_path(@user)
+     else
+       redirect_to student_path(@user)
+    end
   end
 
   def create
@@ -46,7 +51,7 @@ class UsersController < ApplicationController
 
 private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role, :picture, :gender, :location, :bio, :email, :birthday, :education_level, :linkedin_url, :employment_status, :industry)
+    params.require(:user).permit(:first_name, :last_name, :role, :picture, :gender, :location, :bio, :email, :birthday, :education_level, :linkedin_url, :employment_status, industries_attributes: [:name], :industry_ids => [])
   end
 
   def flash_message

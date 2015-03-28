@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   # resources :users, path: "mentors", except: :index
   # resources :users, path: "students", except: :index
 
+
   get '/users/new' => 'users#new'
   post '/' => 'users#create'
-  
+
   get '/mentors' => 'users#mentors_index'
   post '/mentors' => 'users#create'
   # get '/mentors/new' => 'users#new'
@@ -34,11 +35,11 @@ Rails.application.routes.draw do
 
 
   # get '/users' => 'users#show'
-  # get '/students/:id' => 'users#show' 
+  # get '/students/:id' => 'users#show'
 
 
   # get '/mentors/:id' => 'users#show', as: "mentor"
-  # get '/students/:id' => 'users#show', as: "student" 
+  # get '/students/:id' => 'users#show', as: "student"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

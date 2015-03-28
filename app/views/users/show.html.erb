@@ -18,3 +18,11 @@
 
 <%= render 'matches' %>
 
+<% if @user == current_user %>
+  <% if @user.role == "Mentor" %>
+    <%= link_to "Edit", "/mentors/#{current_user.id}/edit" %>
+  <% else %>
+    <%= link_to "Edit", "/students/#{current_user.id}/edit"   %>
+  <% end %>
+<% end %>
+

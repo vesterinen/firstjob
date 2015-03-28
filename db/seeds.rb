@@ -37,7 +37,6 @@ def users
     gender: randomize(genders),
     birthday: random_birthdate,
     location: randomize(locations),
-    industry: randomize(industries),
     education_level: randomize(education_levels),
     employment_status: randomize(employment_status)
     })
@@ -53,7 +52,16 @@ def emails
   emails
 end
 
+def industries
+  array = ["Research", "Academia", "Computer Science", "Politics", "Medicine", "Healthcare", "Administration", "Music", "Sports", "Journalism", "Economics"]
+  array.each do |industry|
+    Industry.create(name: industry)
+  end
+end
+
+industries
 users
+
 
 # Examples:
 #
