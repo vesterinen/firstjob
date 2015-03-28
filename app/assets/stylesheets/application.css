@@ -16,3 +16,10 @@
  */
 
  @import 'bootstrap';
+
+.user-email-attribute {
+  color: green;
+  font-size: 18px;
+  text-align: center;
+}
+

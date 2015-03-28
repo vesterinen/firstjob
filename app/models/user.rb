@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
       end
     else
       candidates = User.where(role: "Student", location: self.location)
+     # candidates = candidates.collect{|candidate| candidate if !candidate.mentor_match}.compact
       if candidates.count > 0
         student = candidates.sample
         self.students << student

@@ -12,9 +12,6 @@ module ApplicationHelper
     current_user.role == "Student"
   end
 
-  def mentor?
-    current_user.role == "Mentor"
-  end
 
 
 end

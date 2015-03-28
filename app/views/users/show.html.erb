@@ -4,16 +4,44 @@
 
 <h1 class="user-name"><%="#{@user.first_name} #{@user.last_name}"%></h1>
 
+<% if current_user %>
+  <% if current_user.role == "Student" %>
+    <% if current_user.mentor_match %>
+      <% if current_user.mentor == @user %>
+        <p class="user-email-attribute"><strong>Feel free to contact your match <%= @user.first_name %> at <%= @user.email %></strong></p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if current_user %>
+  <% if current_user.role == "Mentor" %>
+    <% if current_user.students %>
+      <% if current_user.students.include?(@user) %>
+        <p class="user-email-attribute"><strong>Feel free to contact your match <%= @user.first_name %> at <%= @user.email %></strong></p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+
+
 <p class="user-attribute"><%= @user.picture %></p>
-<p class="user-attribute"><%= @user.gender %></p>
-<p class="user-attribute"><%= @user.birthday %></p>
-<p class="user-attribute"><%= @user.location %></p>
-<p class="user-attribute"><%= @user.employment_status %></p>
-<p class="user-attribute"><%= @user.bio %></p>
-<p class="user-attribute"><%= @user.role %></p>
-<p class="user-attribute"><%= @user.education_level %></p>
-<p class="user-attribute"><%= @user.linkedin_url %></p>
-<p class="user-attribute"><% @user.industries.each { |industry| industry.name } %></p>
+<p class="user-attribute"><strong>Gender:</strong> <%= @user.gender %></p>
+<p class="user-attribute"><strong>Birthday:</strong> <%= @user.birthday %></p>
+<p class="user-attribute"><strong>City:</strong> <%= @user.location %></p>
+<p class="user-attribute"><strong>Employment Status:</strong> <%= @user.employment_status %></p>
+<p class="user-attribute"><strong>Bio:</strong><br></br> <%= @user.bio %></p>
+<p class="user-attribute"><strong>Role:</strong> <%= @user.role %> </p>
+<p class="user-attribute"><strong>Education Level:</strong> <%= @user.education_level %></p>
+<p class="user-attribute"><strong>LinkedIn Profile:</strong><a href="<%= @user.linkedin_url %>" target="_blank"> <%= @user.linkedin_url %> </a></p>
+<p class="user-attribute"><strong>Industries I'm Interested:</strong> </br>
+  <% @user.industries.each do |industry| %>
+    <%= industry.name %> |
+  <% end %>
+</p>
 
 
 <%= render 'matches' %>
@@ -25,4 +53,6 @@
     <%= link_to "Edit", "/students/#{current_user.id}/edit"   %>
   <% end %>
 <% end %>
+
+
 
