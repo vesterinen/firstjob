@@ -13,6 +13,8 @@
 <p class="user-attribute"><%= @user.role %></p>
 <p class="user-attribute"><%= @user.education_level %></p>
 <p class="user-attribute"><%= @user.linkedin_url %></p>
+<p class="user-attribute"><% @user.industries.each { |industry| industry.name } %></p>
+
 
 <%= render 'matches' %>
 
