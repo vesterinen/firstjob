@@ -48,6 +48,10 @@ class User < ActiveRecord::Base
     self.mentor? ? self.students : self.mentor
   end
 
+  def pronoun #is user a him or her?
+    self.gender == 'male' ? 'him' : 'her'
+  end
+
   def has_match?
     has_mentor? || has_students?
   end
