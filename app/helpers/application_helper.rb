@@ -7,11 +7,4 @@ module ApplicationHelper
       link_to "Login", login_path
     end
   end
-
-  def student?
-    current_user.role == "Student"
-  end
-
-
-
 end

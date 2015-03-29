@@ -4,55 +4,43 @@
 
 <h1 class="user-name"><%="#{@user.first_name} #{@user.last_name}"%></h1>
 
-<% if current_user %>
-  <% if current_user.role == "Student" %>
-    <% if current_user.mentor_match %>
-      <% if current_user.mentor == @user %>
-        <p class="user-email-attribute"><strong>Feel free to contact your match <%= @user.first_name %> at <%= @user.email %></strong></p>
-      <% end %>
+<% if logged_in? %>
+
+  <% if current_user.has_match? %>
+    <% if current_user.match == @user || (current_user.mentor? && current_user.match.include?(@user)) %>
+        <p><strong>Feel free to contact your match <%= @user.first_name %> at <%= @user.email %></strong></p>
     <% end %>
   <% end %>
 <% end %>
 
-<% if current_user %>
-  <% if current_user.role == "Mentor" %>
-    <% if current_user.students %>
-      <% if current_user.students.include?(@user) %>
-        <p class="user-email-attribute"><strong>Feel free to contact your match <%= @user.first_name %> at <%= @user.email %></strong></p>
-      <% end %>
+<div class="user-attributes">
+  <p><%= @user.picture %></p>
+  <p><strong>Gender:</strong> <%= @user.gender %></p>
+  <p><strong>Birthday:</strong> <%= @user.birthday %></p>
+  <p><strong>City:</strong> <%= @user.location %></p>
+  <p><strong>Employment Status:</strong> <%= @user.employment_status %></p>
+  <p><strong>Bio:</strong><br></br> <%= @user.bio %></p>
+  <p><strong>Role:</strong> <%= @user.role %> </p>
+  <p><strong>Education Level:</strong> <%= @user.education_level %></p>
+  <p>
+    <strong>LinkedIn Profile:</strong>
+    <a href="http://www.<%= @user.linkedin_url %>" target="_blank"> <%= @user.linkedin_url %> </a>
+    <!-- How can we use an action view helper to link to an external site? -->
+  </p>
+
+  <p class="user-attribute"><strong>Industries I'm Interested:</strong></br>
+    <% @user.industries.each do |industry| %>
+      <%= industry.name %>  |
     <% end %>
-  <% end %>
-<% end %>
-
-
-
-
-
-<p class="user-attribute"><%= @user.picture %></p>
-<p class="user-attribute"><strong>Gender:</strong> <%= @user.gender %></p>
-<p class="user-attribute"><strong>Birthday:</strong> <%= @user.birthday %></p>
-<p class="user-attribute"><strong>City:</strong> <%= @user.location %></p>
-<p class="user-attribute"><strong>Employment Status:</strong> <%= @user.employment_status %></p>
-<p class="user-attribute"><strong>Bio:</strong><br></br> <%= @user.bio %></p>
-<p class="user-attribute"><strong>Role:</strong> <%= @user.role %> </p>
-<p class="user-attribute"><strong>Education Level:</strong> <%= @user.education_level %></p>
-<p class="user-attribute"><strong>LinkedIn Profile:</strong><a href="<%= @user.linkedin_url %>" target="_blank"> <%= @user.linkedin_url %> </a></p>
-<p class="user-attribute"><strong>Industries I'm Interested:</strong> </br>
-  <% @user.industries.each do |industry| %>
-    <%= industry.name %> |
-  <% end %>
-</p>
-
+  </p>
+</div>
 
 <%= render 'matches' %>
 
-<% if @user == current_user %>
-  <% if @user.role == "Mentor" %>
-    <%= link_to "Edit", "/mentors/#{current_user.id}/edit" %>
+<% if authorized? %>
+  <% if @user.mentor? %>
+    <%= link_to "Edit", mentor_edit_path(@user) %>
   <% else %>
-    <%= link_to "Edit", "/students/#{current_user.id}/edit"   %>
+    <%= link_to "Edit", student_edit_path(@user)   %>
   <% end %>
 <% end %>
-
-
-
