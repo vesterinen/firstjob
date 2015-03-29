@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
 
   def candidate_pool
     pool = User.where.not(role: self.role).where(location: self.location)
-    pool.collect{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    pool = pool.flat_map{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    pool
   end
 
   def candidate
@@ -67,9 +68,7 @@ class User < ActiveRecord::Base
 
   def generate_match
     if candidate
-      match = Match.create("#{self.user_type}_id": self.id, "#{candidate.user_type}_id": candidate.id)
-      self.students << candidate if self.mentor?
-      self.mentor_match = match if self.student?
+      Match.create("#{self.user_type}_id": self.id, "#{candidate.user_type}_id": candidate.id)
     else
       return "No matches found."
     end
