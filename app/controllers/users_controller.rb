@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     if @user.save
       @user.generate_match
       if @user.has_match?
-        flash[:notice] = "Here's your new #{@user.match.role.downcase}! Feel free to contact #{@user.pronoun} anytime."
+        flash[:notice] = "Here's your new #{@user.match.user_type}! Feel free to contact #{@user.pronoun} anytime."
         if @user.student?
           redirect_to mentor_path(@user.mentor)
         else

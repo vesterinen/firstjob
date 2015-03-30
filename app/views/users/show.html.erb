@@ -8,7 +8,7 @@
 
   <% if current_user.has_match? %>
     <% if current_user.match == @user || (current_user.mentor? && current_user.match.include?(@user)) %>
-        <p class="contact-match"><strong>Feel free to contact your <%= @user.role.downcase %>, <%= @user.first_name %><%=@user.last_name%> at <%= @user.email %></strong></p>
+        <p class="contact-match"><strong>Feel free to contact your <%= @user.user_type %>, <%= @user.first_name %><%=@user.last_name%> at <%= @user.email %></strong></p>
     <% end %>
   <% end %>
 <% end %>

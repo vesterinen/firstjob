@@ -62,17 +62,26 @@ class User < ActiveRecord::Base
     pool
   end
 
+  def filtered_candidates
+    candidates = []
+
+    self.industries.each do |industry|
+      candidates << (candidate_pool.select{|candidate| candidate.industries.include?(industry)})
+    end
+    candidates.flatten
+  end
+
   def candidate
-    candidate_pool.sample if !candidate_pool.empty?
+    filtered_candidates.sample
   end
 
   def user_type
-    self.role.downcase
+    self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
   end
 
   def generate_match
-    if candidate
-      Match.create("#{self.user_type}_id": self.id, "#{candidate.user_type}_id": candidate.id)
+    if !!candidate
+      Match.create("#{self.user_type}_id".to_sym => self.id, "#{candidate.user_type}_id".to_sym => candidate.id)
     else
       return "No matches found."
     end
