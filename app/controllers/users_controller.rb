@@ -41,10 +41,12 @@ class UsersController < ApplicationController
         flash[:notice] = "Here's your match. Feel free to contact anytime."
         redirect_to mentor_path(@user.mentor)
       else
-       # if !@user.students.empty?
+        if !@user.students.empty?
           flash[:notice] = "Here's your match. Feel free to contact anytime."
           redirect_to student_path(@user.students.last)
-       # end
+        else
+          redirect_to students_path(@user)
+        end
       end
     else
       render :new
