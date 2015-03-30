@@ -46,6 +46,15 @@
     <%= f.text_field :email %><br><br>
   </div>
 
+  <% if !@user.registered? %>
+    <div class="field" id="password">
+      <%= f.label :password %>
+      <%= f.password_field :password %><br><br>
+      <%= f.label :password, "Password Confirmation"%>
+      <%= f.password_field :password %><br><br>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :location %>
     <%= f.text_field :location %><br><br>

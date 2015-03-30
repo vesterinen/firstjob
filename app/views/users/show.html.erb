@@ -35,7 +35,7 @@
   </p>
 </div>
 
-<%= render 'matches' %>
+<%= render 'matches' if authorized?%>
 
 <% if authorized? %>
   <% if @user.mentor? %>

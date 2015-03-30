@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  # has_secure_password
+  # has_many :identities, dependent: :destroy
+  has_secure_password
 
   validates :role, presence: true
   validates :first_name, presence: true
@@ -20,8 +21,8 @@ class User < ActiveRecord::Base
   delegate :mentor, to: :mentor_match
 
 
-  def self.login(email)
-    (user = User.find_by(:email => email)) #&& user.authenticate(password)
+  def self.login(email, password)
+    (user = User.find_by(:email => email)) && user.authenticate(password)
   end
 
   def student?
@@ -44,6 +45,10 @@ class User < ActiveRecord::Base
     !!self.mentor_match
   end
 
+  def user_type
+    self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
+  end
+
   def match
     self.mentor? ? self.students : self.mentor
   end
@@ -62,7 +67,7 @@ class User < ActiveRecord::Base
     pool
   end
 
-  def filtered_candidates
+  def industry_filtered
     candidates = []
 
     self.industries.each do |industry|
@@ -72,11 +77,7 @@ class User < ActiveRecord::Base
   end
 
   def candidate
-    filtered_candidates.sample
-  end
-
-  def user_type
-    self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
+    industry_filtered.sample
   end
 
   def generate_match
@@ -85,5 +86,9 @@ class User < ActiveRecord::Base
     else
       return "No matches found."
     end
+  end
+
+  def self.create_with_omniauth(hash)
+    self.create(first_name: hash[:info][:name], uid: hash[:uid], provider: hash[:provider])
   end
 end
