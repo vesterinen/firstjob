@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   # has_many :identities, dependent: :destroy
   has_secure_password
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "20x20#" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   validates :role, presence: true
   validates :first_name, presence: true

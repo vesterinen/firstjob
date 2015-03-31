@@ -21,6 +21,7 @@
     </div>
   <% end %>
 
+
   <div class="field">
     <%= f.radio_button :role, "Student"%>
     <%= f.label :role, "Student", :value => 'Student' %>
@@ -40,6 +41,11 @@
     <%= f.label :last_name %>
     <%= f.text_field :last_name %><br><br>
   </div>
+
+  <div>
+    <% f.label :avatar, "Picture Upload" %>
+    <%= f.file_field :avatar %>
+  </div><br>
 
   <div class="field" id="contact-info">
     <%= f.label :email %>
