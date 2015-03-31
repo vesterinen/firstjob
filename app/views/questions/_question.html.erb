@@ -1,0 +1,17 @@
+<%= li_for_question(question) do %>
+  <div class="view">
+    <%= form_for([@list, question]) do |f| %>
+      <%= f.check_box :status, :class => "toggle" %>
+    <% end %>
+
+    <label><%= question.content %></label>
+
+    <%#= form_for(question, :method => :delete) do |f| %>
+      <button class="destroy"></button>
+    <%# end %>
+  </div>
+
+  <%= form_for([@list, question], :html => {:class => "update"}) do |f| %>
+    <%= f.text_field :content, :class => "edit" %>
+  <% end %>
+<% end %>

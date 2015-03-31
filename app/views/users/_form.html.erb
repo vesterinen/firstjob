@@ -21,7 +21,6 @@
     </div>
   <% end %>
 
-
   <div class="field">
     <%= f.radio_button :role, "Student"%>
     <%= f.label :role, "Student", :value => 'Student' %>
@@ -66,6 +65,8 @@
     <%= f.text_field :location %><br><br>
   </div>
 
+<%#= time_zone_select(:person, :time_zone) %>
+
   <div class="field">
       <%= f.label :industry %><br>
       <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
@@ -73,7 +74,7 @@
 
   <div class="field">
     <%= f.label :birthday %>
-    <%= f.text_field :birthday %><br><br>
+    <%= f.date_field :birthday %><br><br>
   </div>
 
   <div class="field">

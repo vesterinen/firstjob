@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :questions
+
+  resources :lists
+
   # resources :users, path: "mentors", except: :index
   # resources :users, path: "students", except: :index
 

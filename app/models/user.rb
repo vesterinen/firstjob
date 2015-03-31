@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # has_many :identities, dependent: :destroy
   has_secure_password
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "20x20#" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
@@ -51,13 +52,13 @@ class User < ActiveRecord::Base
     self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
   end
 
-  def match
+  def match #all matches associated with the given user
     self.mentor? ? self.students : self.mentor
   end
 
-  def pronoun #is user a him or her?
-    self.gender == 'male' ? 'him' : 'her'
-  end
+  # def pronoun #is user a him or her?
+  #   self.gender == 'male' ? 'him' : 'her'
+  # end
 
   def has_match?
     has_mentor? || has_students?
@@ -90,7 +91,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.create_with_omniauth(hash)
-    self.create(first_name: hash[:info][:name], uid: hash[:uid], provider: hash[:provider])
-  end
+  # def self.create_with_omniauth(hash)
+  #   self.create(first_name: hash[:info][:name], uid: hash[:uid], provider: hash[:provider])
+  # end
 end
