@@ -26,9 +26,9 @@ class UsersController < ApplicationController
   def update
     set_user
     @user.update(user_params)
-    if current_user.role == "Mentor"
+    if current_user.mentor?
         redirect_to mentor_path(@user)
-     else
+    else
        redirect_to student_path(@user)
     end
   end
@@ -37,6 +37,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_match
+<<<<<<< HEAD
       if @user.role == "Student"
         flash[:notice] = "Here's your match. Feel free to contact anytime."
         redirect_to mentor_path(@user.mentor)
@@ -47,6 +48,18 @@ class UsersController < ApplicationController
         else
           redirect_to students_path(@user)
         end
+=======
+      if @user.has_match?
+        flash[:notice] = "Here's your new #{@user.match.user_type}! Feel free to contact #{@user.pronoun} anytime."
+        if @user.student?
+          redirect_to mentor_path(@user.mentor)
+        else
+          redirect_to student_path(@user.students.last)
+        end
+      else
+        redirect_to student_path(@user) if @user.student?
+        redirect_to mentor_path(@user) if @user.mentor?
+>>>>>>> b3742da877885047ec63ce67225581b00073a36f
       end
     else
       render :new
@@ -61,10 +74,4 @@ private
   def set_user
     @user = User.find(params[:id])
   end
-
-
-
 end
-
-
-

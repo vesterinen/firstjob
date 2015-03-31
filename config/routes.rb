@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/mentors' => 'users#mentors_index'
   post '/mentors' => 'users#create'
   # get '/mentors/new' => 'users#new'
-  get '/mentors/:id/edit' => 'users#edit'
+  get '/mentors/:id/edit' => 'users#edit', as: :mentor_edit
   patch '/mentors/:id' => 'users#update'
   put '/mentors/:id' => 'users#update'
   get '/mentors/:id' => 'users#show', as: :mentor
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get '/students' => 'users#students_index'
   post '/students' => 'users#create'
   # get '/students/new' => 'users#new'
-  get '/students/:id/edit' => 'users#edit'
+  get '/students/:id/edit' => 'users#edit', as: :student_edit
   patch '/students/:id' => 'users#update'
   put '/students/:id' => 'users#update'
   get '/students/:id' => 'users#show', as: :student

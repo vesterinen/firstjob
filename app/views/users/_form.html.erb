@@ -1,5 +1,5 @@
-<% if @user.id %>
-  <% if @user.role == "Student" %>
+<% if @user.registered? %>
+  <% if @user.student? %>
     <% path = student_path(@user) %>
   <% else %>
     <% path = mentor_path(@user) %>
@@ -9,64 +9,87 @@
 <% end %>
 
 <%= form_for(@user, url: path) do |f| %>
- <% if @user.errors.any? %>
-   <div id="error_explanation">
-     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-     <ul>
-     <% @user.errors.full_messages.each do |msg| %>
-       <li><%= msg %></li>
-     <% end %>
-     </ul>
-   </div>
- <% end %>
-
- <div class="field">
-  <%= f.radio_button :role, "Student"%>
-  <%= f.label :role, "Student", :value => 'Student' %>
-
-  <%= f.radio_button :role, "Mentor"%>
-  <%= f.label :role, "Mentor", :value => 'Mentor' %><br><br>
-
-  <%= f.label :first_name %>
-  <%= f.text_field :first_name %><br><br>
-
-  <%= f.label :last_name %>
-  <%= f.text_field :last_name %><br><br>
-
-  <%= f.label :email %>
-  <%= f.text_field :email %><br><br>
-
-  <%= f.label :location %>
-  <%= f.text_field :location %><br><br>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
-    <%= f.label :industry %><br>
-    <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
+    <%= f.radio_button :role, "Student"%>
+    <%= f.label :role, "Student", :value => 'Student' %>
   </div>
 
-  <%= f.label :birthday %>
-  <%= f.text_field :birthday %><br><br>
+  <div class="field">
+    <%= f.radio_button :role, "Mentor"%>
+    <%= f.label :role, "Mentor", :value => 'Mentor' %><br><br>
+  </div>
 
-  <%= f.radio_button :gender, "male"%>
-  <%= f.label :gender, "Male", :value => 'male' %>
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %><br><br>
+  </div>
 
-  <%= f.radio_button :gender, "female"%>
-  <%= f.label :gender, "Female", :value => 'female' %><br><br>
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %><br><br>
+  </div>
 
-  <%= f.label :employment_status %>
-  <%= f.text_field :employment_status %><br><br>
+  <div class="field" id="contact-info">
+    <%= f.label :email %>
+    <%= f.text_field :email %><br><br>
+  </div>
 
-  <%= f.label :education_level %>
-  <%= f.text_field :education_level %><br><br>
+  <div class="field">
+    <%= f.label :location %>
+    <%= f.text_field :location %><br><br>
+  </div>
 
-  <%= f.label :linkedin_url %>
-  <%= f.text_field :linkedin_url %><br><br>
- </div>
-  <% if @user.id %>
-    <%= f.submit "Save Changes" %>
-  <% else %>
-    <%= f.submit "Give me my match!" %>
-  <% end %>
+  <div class="field">
+      <%= f.label :industry %><br>
+      <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.label :birthday %>
+    <%= f.text_field :birthday %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.radio_button :gender, "male"%>
+    <%= f.label :gender, "Male", :value => 'male' %>
+    <%= f.radio_button :gender, "female"%>
+    <%= f.label :gender, "Female", :value => 'female' %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.label :employment_status %>
+    <%= f.text_field :employment_status %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.label :education_level %>
+    <%= f.text_field :education_level %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.label :linkedin_url %>
+    <%= f.text_field :linkedin_url %><br><br>
+  </div>
+
+  <div class="field">
+    <% if @user.registered? %>
+      <%= f.submit "Save Changes" %>
+    <% else %>
+      <%= f.submit "Give me my match!" %>
+    <% end %>
+  </div>
+
 <% end %>
 

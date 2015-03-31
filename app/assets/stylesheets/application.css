@@ -17,9 +17,14 @@
 
  @import 'bootstrap';
 
-.user-email-attribute {
+.contact-match {
   color: green;
   font-size: 18px;
   text-align: center;
+}
+
+.notice {
+  color: orange;
+  font-size: 20px;
 }
 
