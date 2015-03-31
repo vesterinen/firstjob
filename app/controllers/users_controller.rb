@@ -37,18 +37,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_match
-<<<<<<< HEAD
-      if @user.role == "Student"
-        flash[:notice] = "Here's your match. Feel free to contact anytime."
-        redirect_to mentor_path(@user.mentor)
-      else
-        if !@user.students.empty?
-          flash[:notice] = "Here's your match. Feel free to contact anytime."
-          redirect_to student_path(@user.students.last)
-        else
-          redirect_to students_path(@user)
-        end
-=======
       if @user.has_match?
         flash[:notice] = "Here's your new #{@user.match.user_type}! Feel free to contact #{@user.pronoun} anytime."
         if @user.student?
@@ -59,7 +47,6 @@ class UsersController < ApplicationController
       else
         redirect_to student_path(@user) if @user.student?
         redirect_to mentor_path(@user) if @user.mentor?
->>>>>>> b3742da877885047ec63ce67225581b00073a36f
       end
     else
       render :new
