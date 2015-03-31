@@ -60,7 +60,7 @@ def industries
 end
 
 industries
-users
+
 
 
 # Examples:

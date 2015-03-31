@@ -39,7 +39,7 @@ class UsersController < ApplicationController
       login(@user)
       @user.generate_match
       if @user.has_match?
-        flash[:notice] = "Here's your new match! Feel free to contact #{@user.pronoun} anytime."
+        flash[:notice] = "Here's your new match! Feel free to reach out anytime."
         if @user.student?
           redirect_to mentor_path(@user.mentor)
         else

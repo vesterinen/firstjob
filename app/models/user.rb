@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   end
 
   def registered?
-    !!self.id 
+    !!self.id
   end
 
   def has_students?
@@ -66,13 +66,14 @@ class User < ActiveRecord::Base
 
   def candidate_pool
     pool = User.where.not(role: self.role).where(location: self.location)
-    pool = pool.flat_map{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    if !pool.empty? && pool.first.student?
+      pool = pool.flat_map{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    end
     pool
   end
 
   def industry_filtered
     candidates = []
-
     self.industries.each do |industry|
       candidates << (candidate_pool.select{|candidate| candidate.industries.include?(industry)})
     end
