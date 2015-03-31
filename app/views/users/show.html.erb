@@ -13,8 +13,14 @@
   <% end %>
 <% end %>
 
+<div class="profile-picture">
+  <p><%= image_tag @user.avatar.url %>
+    <%#= image_tag @user.avatar.url(:medium) %>
+    <%#= image_tag @user.avatar.url(:thumb) %>
+  </p>
+</div>
+
 <div class="user-attributes">
-  <p><%= @user.picture %></p>
   <p><strong>Gender:</strong> <%= @user.gender %></p>
   <p><strong>Birthday:</strong> <%= @user.birthday %></p>
   <p><strong>City:</strong> <%= @user.location %></p>
@@ -35,7 +41,7 @@
   </p>
 </div>
 
-<%= render 'matches' %>
+<%= render 'matches' if authorized?%>
 
 <% if authorized? %>
   <% if @user.mentor? %>

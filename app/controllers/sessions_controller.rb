@@ -1,10 +1,9 @@
 class SessionsController < ApplicationController
-
   def new
   end
 
   def create    
-    if @user = User.login(params[:email])
+    if @user = User.login(params[:email], params[:password])
       login(@user)
       if session[:back_to].present?
         back_to = session[:back_to]

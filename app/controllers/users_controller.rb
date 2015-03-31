@@ -36,9 +36,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      login(@user)
       @user.generate_match
       if @user.has_match?
-        flash[:notice] = "Here's your new #{@user.match.user_type}! Feel free to contact #{@user.pronoun} anytime."
+        flash[:notice] = "Here's your new match! Feel free to contact #{@user.pronoun} anytime."
         if @user.student?
           redirect_to mentor_path(@user.mentor)
         else
@@ -55,7 +56,7 @@ class UsersController < ApplicationController
 
 private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role, :picture, :gender, :location, :bio, :email, :birthday, :education_level, :linkedin_url, :employment_status, industries_attributes: [:name], :industry_ids => [])
+    params.require(:user).permit(:avatar, :password, :first_name, :last_name, :role, :picture, :gender, :location, :bio, :email, :birthday, :education_level, :linkedin_url, :provider, :uid, :employment_status, industries_attributes: [:name], :industry_ids => [])
   end
 
   def set_user

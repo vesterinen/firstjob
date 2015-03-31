@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
-  # has_secure_password
+  # has_many :identities, dependent: :destroy
+  has_secure_password
+
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "20x20#" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   validates :role, presence: true
   validates :first_name, presence: true
@@ -20,8 +24,8 @@ class User < ActiveRecord::Base
   delegate :mentor, to: :mentor_match
 
 
-  def self.login(email)
-    (user = User.find_by(:email => email)) #&& user.authenticate(password)
+  def self.login(email, password)
+    (user = User.find_by(:email => email)) && user.authenticate(password)
   end
 
   def student?
@@ -44,13 +48,17 @@ class User < ActiveRecord::Base
     !!self.mentor_match
   end
 
-  def match
+  def user_type
+    self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
+  end
+
+  def match #all matches associated with the given user
     self.mentor? ? self.students : self.mentor
   end
 
-  def pronoun #is user a him or her?
-    self.gender == 'male' ? 'him' : 'her'
-  end
+  # def pronoun #is user a him or her?
+  #   self.gender == 'male' ? 'him' : 'her'
+  # end
 
   def has_match?
     has_mentor? || has_students?
@@ -62,7 +70,7 @@ class User < ActiveRecord::Base
     pool
   end
 
-  def filtered_candidates
+  def industry_filtered
     candidates = []
 
     self.industries.each do |industry|
@@ -72,11 +80,7 @@ class User < ActiveRecord::Base
   end
 
   def candidate
-    filtered_candidates.sample
-  end
-
-  def user_type
-    self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
+    industry_filtered.sample
   end
 
   def generate_match
@@ -86,4 +90,8 @@ class User < ActiveRecord::Base
       return "No matches found."
     end
   end
+
+  # def self.create_with_omniauth(hash)
+  #   self.create(first_name: hash[:info][:name], uid: hash[:uid], provider: hash[:provider])
+  # end
 end

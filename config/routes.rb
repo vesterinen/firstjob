@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+  resources :questions
+
+  resources :lists
+
   # resources :users, path: "mentors", except: :index
   # resources :users, path: "students", except: :index
 
+  get '/auth/:provider/callback', :to => 'sessions#create'
+  get '/auth/:provider', :to => 'sessions#new'
+  get '/logout', :to => 'sessions#destroy'
 
   get '/users/new' => 'users#new'
   post '/' => 'users#create'

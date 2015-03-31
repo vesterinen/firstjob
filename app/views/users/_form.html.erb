@@ -41,15 +41,31 @@
     <%= f.text_field :last_name %><br><br>
   </div>
 
+  <div>
+    <% f.label :avatar, "Picture Upload" %>
+    <%= f.file_field :avatar %>
+  </div><br>
+
   <div class="field" id="contact-info">
     <%= f.label :email %>
     <%= f.text_field :email %><br><br>
   </div>
 
+  <% if !@user.registered? %>
+    <div class="field" id="password">
+      <%= f.label :password %>
+      <%= f.password_field :password %><br><br>
+      <%= f.label :password, "Password Confirmation"%>
+      <%= f.password_field :password %><br><br>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :location %>
     <%= f.text_field :location %><br><br>
   </div>
+
+<%#= time_zone_select(:person, :time_zone) %>
 
   <div class="field">
       <%= f.label :industry %><br>
@@ -58,7 +74,7 @@
 
   <div class="field">
     <%= f.label :birthday %>
-    <%= f.text_field :birthday %><br><br>
+    <%= f.date_field :birthday %><br><br>
   </div>
 
   <div class="field">
