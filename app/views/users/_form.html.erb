@@ -68,8 +68,13 @@
 <%#= time_zone_select(:person, :time_zone) %>
 
   <div class="field">
-      <%= f.label :industry %><br>
-      <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
+    <%= f.label :industry %><br>
+    <%= f.collection_check_boxes :industry_ids, Industry.all, :id, :name %><br><br>
+  </div>
+
+  <div class="field">
+    <%= f.label :language %><br>
+    <%= f.collection_check_boxes :language_ids, Language.all, :id, :name %><br><br>
   </div>
 
   <div class="field">
