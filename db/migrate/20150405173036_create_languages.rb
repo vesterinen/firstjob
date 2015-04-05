@@ -1,6 +1,6 @@
-class CreateLists < ActiveRecord::Migration
+class CreateLanguages < ActiveRecord::Migration
   def change
-    create_table :lists do |t|
+    create_table :languages do |t|
       t.string :name
 
       t.timestamps null: false

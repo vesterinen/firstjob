@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   # has_many :identities, dependent: :destroy
   has_secure_password
 
+  # has_many :lists, dependent: :destroy
+  # has_many :items, through: :lists
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "20x20#" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
@@ -15,6 +18,10 @@ class User < ActiveRecord::Base
   has_many :industries, through: :user_industries
   accepts_nested_attributes_for :industries
 
+  has_many :user_languages
+  has_many :languages, through: :user_languages
+  accepts_nested_attributes_for :languages
+
   # as a mentor
   has_many :student_matches, class_name: "Match", foreign_key: :mentor_id
   has_many :students, through: :student_matches
@@ -22,7 +29,11 @@ class User < ActiveRecord::Base
   #as student
   has_one :mentor_match,  class_name: "Match", foreign_key: :student_id
   delegate :mentor, to: :mentor_match
+  CATEGORIES = ["industries", "languages"]
 
+  def categories_array
+    CATEGORIES
+  end
 
   def self.login(email, password)
     (user = User.find_by(:email => email)) && user.authenticate(password)
@@ -37,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def registered?
-    !!self.id
+    !!self.id 
   end
 
   def has_students?
@@ -52,36 +63,42 @@ class User < ActiveRecord::Base
     self.is_a?(Array) ? self.first.role.downcase : self.role.downcase
   end
 
-  def match #all matches associated with the given user
+  def match
     self.mentor? ? self.students : self.mentor
   end
 
-  # def pronoun #is user a him or her?
-  #   self.gender == 'male' ? 'him' : 'her'
-  # end
+  def pronoun #is user a him or her?
+    self.gender == 'male' ? 'him' : 'her'
+  end
 
   def has_match?
     has_mentor? || has_students?
   end
 
-  def candidate_pool
+  def candidate_pool #based on role and location
+    # binding.pry
     pool = User.where.not(role: self.role).where(location: self.location)
-    if !pool.empty? && pool.first.student?
-      pool = pool.flat_map{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    if self.mentor? && !pool.empty?
+      pool = pool.flat_map{|potential_candidate| potential_candidate if !potential_candidate.has_match?}.compact
+    elsif self.student? && !pool.empty?
+      pool = pool.flat_map{|potential_candidate| potential_candidate if potential_candidate.match.count <= 2}.compact
     end
     pool
   end
 
-  def industry_filtered
+  def candidate_filter
     candidates = []
-    self.industries.each do |industry|
-      candidates << (candidate_pool.select{|candidate| candidate.industries.include?(industry)})
+
+    self.categories_array.each do |category|
+      self.send(category).each do |attribute|
+        candidates << (candidate_pool.select{|candidate| candidate.send(category).include?(attribute)})
+      end
     end
     candidates.flatten
   end
 
   def candidate
-    industry_filtered.sample
+    candidate_filter.sample
   end
 
   def generate_match
@@ -91,8 +108,4 @@ class User < ActiveRecord::Base
       return "No matches found."
     end
   end
-
-  # def self.create_with_omniauth(hash)
-  #   self.create(first_name: hash[:info][:name], uid: hash[:uid], provider: hash[:provider])
-  # end
 end

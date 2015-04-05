@@ -39,6 +39,12 @@
       <%= industry.name %>  |
     <% end %>
   </p>
+
+  <p class="user-attribute"><strong>Languages I Speak:</strong></br>
+    <% @user.languages.each do |language| %>
+      <%= language.name %>
+    <% end %>
+  </p>
 </div>
 
 <%= render 'matches' if authorized?%>
