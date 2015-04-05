@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   # has_many :identities, dependent: :destroy
   has_secure_password
 
-  has_many :lists, dependent: :destroy
-  has_many :items, through: :lists
+  # has_many :lists, dependent: :destroy
+  # has_many :items, through: :lists
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "20x20#" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -76,9 +76,12 @@ class User < ActiveRecord::Base
   end
 
   def candidate_pool #based on role and location
+    # binding.pry
     pool = User.where.not(role: self.role).where(location: self.location)
-    if !pool.empty? && pool.first.student?
-      pool = pool.flat_map{|candidate| candidate if !candidate.has_match?}.compact if pool.first.student?
+    if self.mentor? && !pool.empty?
+      pool = pool.flat_map{|potential_candidate| potential_candidate if !potential_candidate.has_match?}.compact
+    elsif self.student? && !pool.empty?
+      pool = pool.flat_map{|potential_candidate| potential_candidate if potential_candidate.match.count <= 2}.compact
     end
     pool
   end
