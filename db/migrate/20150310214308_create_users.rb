@@ -8,9 +8,9 @@ class CreateUsers < ActiveRecord::Migration
       t.date :birthday
       t.string :location
       t.string :employment_status
-      t.string :industry
+      t.integer :status, default: 0
       t.text :bio
-      t.binary :picture
+      t.string :role
       t.string :linkedin_url
 
       t.timestamps null: false

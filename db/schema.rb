@@ -11,15 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331001702) do
+ActiveRecord::Schema.define(version: 20150330235214) do
 
   create_table "industries", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "lists", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,12 +25,6 @@ ActiveRecord::Schema.define(version: 20150331001702) do
     t.string   "status",     default: "pending"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-  end
-
-  create_table "questions", force: :cascade do |t|
-    t.string   "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "user_industries", force: :cascade do |t|
@@ -55,12 +43,12 @@ ActiveRecord::Schema.define(version: 20150331001702) do
     t.date     "birthday"
     t.string   "location"
     t.string   "employment_status"
+    t.integer  "status",              default: 0
     t.text     "bio"
-    t.binary   "picture"
-    t.string   "linkedin_url"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
     t.string   "role"
+    t.string   "linkedin_url"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "education_level"
     t.string   "uid"
     t.string   "provider"
